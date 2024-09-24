@@ -5,6 +5,12 @@ name = "pypi"
 
 [packages]
 streamlit = "*"
+watchdog = "*"
+openpyxl = "*"
+langchain = "*"
+langchain-openai = "*"
+python-dotenv = "*"
+xlsxwriter = "*"
 
 [dev-packages]
 
