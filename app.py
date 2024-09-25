@@ -32,11 +32,25 @@ def detect_anomalies_per_column(df, selected_columns, detection_rules):
         anomalies = []
         for text in texts:
            resp = model.invoke([
-                AIMessage(content=f"""你是一名数据分析专家。请根据以下检测规则，判断给定的文本是否为异常值。请回答“是”或“否”。"""),
+                AIMessage(content=f"""
+                你是一名数据分析专家。请根据以下检测规则，判断给定的文本是否为异常值。请回答“是”或“否”
+                
+                示例 1：
+                检测规则：文本长度小于 10
+                文本：hello
+                回答：否
+                
+                示例 2：
+                检测规则：不能包含英文
+                文本：你好
+                回答：是
+"""),
                 HumanMessage(content=f"""
                 检测规则：{rule} 
-                文本：{text}""")
-           ]);
+                文本：{text}
+                回答：
+""")
+           ])
            result = resp.content
            print(rule, text, result)
            anomalies.append(result)
