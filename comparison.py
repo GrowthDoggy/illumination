@@ -3,11 +3,12 @@ import pandas as pd
 from io import BytesIO
 import uuid
 
-st.title("增长汪汪 - 面向产研团队的 BI 数据分析工具")
+st.title("增长汪汪 - 面向产品运营团队的 BI 数据分析工具")
 
 st.header("数据比较")
 
 st.subheader("上传 Excel 数据源")
+st.warning("数据隐私保护：上传的 Excel 文件不会被存储在任何云端而仅是被读取到服务器的内存中，当你刷新页面后这些数据会被清除。")
 
 file1 = st.file_uploader("上传第一个文件", type=["xlsx", "xls"])
 file2 = st.file_uploader("上传第二个文件", type=["xlsx", "xls"])
