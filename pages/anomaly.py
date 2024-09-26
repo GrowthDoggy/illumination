@@ -104,7 +104,8 @@ def process_file(df):
 
 
 
-st.title("增长汪汪 - BI 数据分析工具")
+st.title("检测数据源中的异常值")
+st.info("请上传一个 Excel 文件，然后选择要处理的列并撰写检测规则。")
 
 uploaded_file = st.file_uploader("请选择一个 Excel 文件", type=["xlsx", "xls"])
 
