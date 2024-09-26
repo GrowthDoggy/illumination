@@ -52,7 +52,6 @@ def detect_anomalies_per_column(df, selected_columns, detection_rules):
 """)
            ])
            result = resp.content
-           print(rule, text, result)
            anomalies.append(result)
         results[column] = anomalies
     return results
@@ -61,10 +60,9 @@ def process_file(df):
     st.subheader("数据预览（前 10 行）")
     st.dataframe(df.head(10))
 
-    task = st.selectbox("请选择数据处理任务", ["脏数据检测", "语义情感分析", "数据可视化"])
-    st.info('我昨天白天睡眼朦胧中想到：我们是不是有点 Workflow 的意思，可以选择上述不同的小任务编排后自动化处理 Excel 数据。', icon="ℹ️")
+    task = st.selectbox("请选择数据处理任务", ["异常值检测", "语义情感分析", "数据可视化"])
 
-    if task == "脏数据检测":
+    if task == "异常值检测":
         text_columns = df.select_dtypes(include=["object"]).columns.tolist()
         selected_columns = st.multiselect("请选择要处理的文本列（可多选）", text_columns)
 
@@ -78,7 +76,7 @@ def process_file(df):
 
             if st.button("开始检测"):
                 if all(detection_rules.values()):
-                    with st.spinner("正在进行脏数据检测，请稍候..."):
+                    with st.spinner("正在进行异常值检测，请稍候..."):
                         # 调用异常检测函数
                         anomaly_results = detect_anomalies_per_column(df, selected_columns, detection_rules)
                         # 将检测结果添加到数据框中
