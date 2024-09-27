@@ -63,8 +63,8 @@ def process_file(df):
     task = st.selectbox("请选择数据处理任务", ["异常值检测", "语义情感分析", "数据可视化"])
 
     if task == "异常值检测":
-        text_columns = df.select_dtypes(include=["object"]).columns.tolist()
-        selected_columns = st.multiselect("请选择要处理的文本列（可多选）", text_columns)
+        all_columns = df.columns.tolist()
+        selected_columns = st.multiselect("请选择要处理的列（可多选）", all_columns)
 
         detection_rules = {}
         if selected_columns:
