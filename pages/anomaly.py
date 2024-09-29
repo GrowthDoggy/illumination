@@ -1,18 +1,9 @@
 import streamlit as st
 import pandas as pd
-from dotenv import load_dotenv
-import os
 from langchain_core.messages import AIMessage, HumanMessage
 
-load_dotenv()
-
-from langchain_openai import AzureChatOpenAI
-model = AzureChatOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-    azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"],
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    temperature=0,
-)
+from services.llm import get_llm_model
+model = get_llm_model()
 
 from io import BytesIO
 
