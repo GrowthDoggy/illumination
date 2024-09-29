@@ -1,11 +1,10 @@
 import streamlit as st
 import pandas as pd
 from langchain_core.messages import AIMessage, HumanMessage
-
 from services.llm import get_llm_model
-model = get_llm_model()
-
 from io import BytesIO
+
+model = get_llm_model()
 
 def to_excel(df):
     output = BytesIO()
@@ -22,30 +21,33 @@ def detect_anomalies_per_column(df, selected_columns, detection_rules):
         rule = detection_rules.get(column, "")
         anomalies = []
         for text in texts:
-           resp = model.invoke([
+            resp = model.invoke([
                 AIMessage(content=f"""
-                你是一名数据分析专家。请根据以下检测规则，判断给定的文本是否为异常值。请回答“是”或“否”
-                
-                示例 1：
-                检测规则：文本长度小于 10
-                文本：hello
-                回答：否
-                
-                示例 2：
-                检测规则：不能包含英文
-                文本：你好
-                回答：是
+                    你是一名数据分析专家。请根据异常值检测规则，判断给定的文本是否为异常值。
+                    异常值的定义：不满足检测规则的文本。
+                    如果满足检测规则，请回答“是”，否则回答“否”。请仅仅回答“是”或“否”，不要多余的解释。
+
+                    示例 1：
+                    检测规则：文本长度小于 10
+                    文本：hello
+                    回答：是
+
+                    示例 2：
+                    检测规则：包含英文
+                    文本：你好
+                    回答：否
 """),
                 HumanMessage(content=f"""
                 检测规则：{rule} 
                 文本：{text}
                 回答：
 """)
-           ])
-           result = resp.content
-           anomalies.append(result)
+            ])
+            result = resp.content
+            anomalies.append(result)
         results[column] = anomalies
     return results
+
 
 def process_file(df):
     st.subheader("数据预览（前 10 行）")
@@ -90,9 +92,6 @@ def process_file(df):
             st.warning("请先选择要处理的文本列。")
     else:
         st.warning("尚未实现该功能。")
-
-
-
 
 
 st.title("检测数据源中的异常值")
