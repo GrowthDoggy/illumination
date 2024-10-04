@@ -8,7 +8,7 @@
 2. 在项目根目录下运行 `pipenv install` 安装开发环境以及依赖
 3. 运行 `pipenv shell` 进入虚拟环境
 4. 创建 `.env` 文件把 `env.example` 文件中的内容复制到 `.env` 文件中，并填写相应的配置
-5. 运行 `streamlit run xxx.py` 启动服务，`xxx.py` 为你要启动的文件
+5. 运行 `streamlit run app.py` 启动服务
 
 ## 大模型配置
 ### Azure

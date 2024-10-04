@@ -23,7 +23,6 @@ def get_llm_model():
             temperature=0,
             top_k=10,
             top_p=0.1,
-            verbose=True,
         )
     else:
         raise ValueError("Unsupported LLM_PROVIDER value.")
