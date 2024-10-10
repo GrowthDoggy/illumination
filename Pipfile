@@ -12,6 +12,7 @@ langchain-openai = "*"
 python-dotenv = "*"
 xlsxwriter = "*"
 langchain-ollama = "*"
+pyinstaller = "*"
 
 [dev-packages]
 
