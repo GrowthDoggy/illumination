@@ -11,7 +11,23 @@
 5. 运行 `streamlit run app.py` 启动服务
 
 ## 大模型配置
-### Azure
+### OpenAI
+环境变量配置：
+* `LLM_PROVIDER=openai`
+* `OPENAI_API_KEY`：OpenAI API 密钥
+* `OPENAI_MODEL`：OpenAI 模型名称
+* `OPENAI_BASE_URL`：自定义 API 地址，如果你使用的是非 OpenAI 模型但兼容 OpenAI API 的接口，可以配置这个环境变量
+
+以月之暗面 Kimi 举例，环境配置如下：
+```
+LLM_PROVIDER=openai
+OPENAI_MODEL=moonshot-v1-8k
+OPENAI_API_KEY=填入 Kimi 的密钥
+OPENAI_BASE_URL=https://api.moonshot.cn/v1
+```
+
+
+### Azure OpenAI
 1. 根据 [Azure 文档](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview)指导申请 OpenAI 模型的访问权限
 2. 创建 OpenAI 模型的部署实例
 3. 环境变量配置：
