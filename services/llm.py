@@ -22,7 +22,7 @@ def get_llm_model():
             "api_key": os.environ["OPENAI_API_KEY"],
             "temperature": 0,
         }
-        openai_base_url = os.environ["OPENAI_BASE_URL"]
+        openai_base_url = os.environ.get("OPENAI_BASE_URL")
         if openai_base_url:
             openai_params["base_url"] = openai_base_url
 
