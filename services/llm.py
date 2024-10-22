@@ -31,7 +31,7 @@ def get_llm_model():
         from langchain_ollama import ChatOllama
 
         model = ChatOllama(
-            base_url=os.environ["OLLAMA_API_ENDPOINT"],
+            base_url=os.environ.get("OLLAMA_API_ENDPOINT", "http://127.0.0.1:11434"),
             model=os.environ["OLLAMA_MODEL"],
             temperature=0,
             top_k=10,
