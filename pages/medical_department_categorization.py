@@ -2,10 +2,11 @@ import streamlit as st
 import pandas as pd
 from langchain_core.messages import SystemMessage, HumanMessage
 from services.llm import get_llm_model
+import logging
 
 
 def match_departments(dept2, depts_sheet1):
-    model = get_llm_model()
+    model = get_llm_model(max_tokens=30)
 
     resp = model.invoke([
         SystemMessage(content=f"""
@@ -47,8 +48,6 @@ def match_departments(dept2, depts_sheet1):
     if "匹配结果：" in reply:
         reply = reply.replace("匹配结果：", "").strip()
 
-    print(f"待匹配科室: {dept2}，候选科室列表: {depts_sheet1}，匹配结果: {reply}")
-
     # 判断回复中是否包含“（待确认）”
     if "（待确认）" in reply:
         matched_dept = reply.replace("（待确认）", "").strip()
@@ -56,6 +55,8 @@ def match_departments(dept2, depts_sheet1):
     else:
         matched_dept = reply
         remark = "准确"
+
+    logging.info(f"科室名称：{dept2}，匹配结果：{matched_dept}，备注：{remark}")
 
     return matched_dept, remark
 
