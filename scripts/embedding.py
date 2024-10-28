@@ -18,7 +18,7 @@ docs = loader.load()
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 splits = text_splitter.split_documents(docs)
 
-connection = os.getenv("PG_CONNECTION")
+connection = os.getenv("DATABASE_URL")
 collection_name = "hospital_departments"
 vectorstore = PGVector(
     embeddings=embeddings,
