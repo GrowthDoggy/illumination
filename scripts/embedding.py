@@ -2,10 +2,9 @@ import os
 from langchain_community.document_loaders.csv_loader import CSVLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_postgres import PGVector
 from langchain_postgres.vectorstores import PGVector
 
-embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 
 loader = CSVLoader(
     file_path="../files/hospital_departments_full.csv",
@@ -27,9 +26,5 @@ vectorstore = PGVector(
     use_jsonb=True,
 )
 
-retriever = vectorstore.as_retriever()
-
-from langchain_openai import ChatOpenAI
-
-llm = ChatOpenAI(model="gpt-4o-mini")
+vectorstore.add_documents(splits)
 
