@@ -38,7 +38,7 @@ def match_departments(dept_physical_level2, dept_physical_level1, dept_intro, ca
     query = f"二级科室：{dept_physical_level2}，科室简介：{dept_intro}"
 
     # 检索相关文档
-    retrieved_docs = retriever.get_relevant_documents(query)
+    retrieved_docs = retriever.invoke(query)
 
     # 格式化检索到的文档作为上下文
     context = "\n\n".join([doc.page_content for doc in retrieved_docs])
@@ -58,7 +58,7 @@ def match_departments(dept_physical_level2, dept_physical_level1, dept_intro, ca
 执行要求：
 1. 匹配逻辑：根据科室的一级科室、科室简介、名称、疾病、症状等信息进行匹配。如果需要，可以搜索相关疾病或症状以进一步确认匹配结果。
 2. 分析步骤：可以参考分析过程的思路并且一步步地进行分析，详细分析待匹配科室和背景中提到的关键词，如年龄段、疾病类型等，并结合候选科室做出合理推测。
-3. 输出格式：请只要输出“匹配结果”的内容，“分析过程”部分可以隐去。
+3. 输出格式：请只要输出“匹配结果”的内容，不能包含“匹配结果：”这一标题，“分析过程”部分可以隐去。
 
 案例
 参考文档：
