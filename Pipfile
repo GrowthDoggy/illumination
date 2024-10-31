@@ -16,7 +16,7 @@ langchain-postgres = "*"
 sqlalchemy = "*"
 pgvector = "*"
 langchain-community = "*"
-psycopg = "*"
+psycopg = {extras = ["binary"], version = "*"}
 
 [dev-packages]
 
