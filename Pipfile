@@ -12,6 +12,11 @@ langchain-openai = "*"
 python-dotenv = "*"
 xlsxwriter = "*"
 langchain-ollama = "*"
+langchain-postgres = "*"
+sqlalchemy = "*"
+pgvector = "*"
+langchain-community = "*"
+psycopg = "*"
 
 [dev-packages]
 
