@@ -1,0 +1,54 @@
+from langchain_community.document_loaders import PyPDFLoader
+
+# Load the document
+file_path = "../files/人保e相助_2024_4-41.pdf"
+loader = PyPDFLoader(file_path)
+
+docs = loader.load()
+
+print(len(docs))
+
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model="gpt-4o")
+
+
+from langchain_core.vectorstores import InMemoryVectorStore
+from langchain_openai import OpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+splits = text_splitter.split_documents(docs)
+vectorstore = InMemoryVectorStore.from_documents(
+    documents=splits, embedding=OpenAIEmbeddings(model="text-embedding-3-large")
+)
+
+retriever = vectorstore.as_retriever()
+
+from langchain.chains import create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_core.prompts import ChatPromptTemplate
+
+system_prompt = (
+    "You are an assistant for question-answering tasks. "
+    "Use the following pieces of retrieved context to answer "
+    "the question. If you don't know the answer, say that you "
+    "don't know. Use three sentences maximum and keep the "
+    "answer concise."
+    "\n\n"
+    "{context}"
+)
+
+prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt),
+        ("human", "{input}"),
+    ]
+)
+
+question_answer_chain = create_stuff_documents_chain(llm, prompt)
+rag_chain = create_retrieval_chain(retriever, question_answer_chain)
+
+results = rag_chain.invoke({"input": "合同中 7.18 重大疾病 部分下，请找到所有的 101 条重大疾病并将它们以列表形式返回。"})
+
+print(results['answer'])

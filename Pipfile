@@ -17,6 +17,7 @@ sqlalchemy = "*"
 pgvector = "*"
 langchain-community = "*"
 psycopg = {extras = ["binary"], version = "*"}
+pypdf = "*"
 
 [dev-packages]
 
