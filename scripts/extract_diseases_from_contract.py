@@ -8,7 +8,10 @@ docs = loader.load()
 
 from langchain_openai import ChatOpenAI
 
-llm = ChatOpenAI(model="gpt-4o")
+llm = ChatOpenAI(
+    model="gpt-4o",
+    temperature=0,
+)
 
 
 from langchain_core.vectorstores import InMemoryVectorStore
@@ -47,9 +50,8 @@ prompt = ChatPromptTemplate.from_messages(
 question_answer_chain = create_stuff_documents_chain(llm, prompt)
 rag_chain = create_retrieval_chain(retriever, question_answer_chain)
 
-results = rag_chain.invoke({"input": "请解析附件中的合同条款，按照以下规则处理完毕后，直接输出结果。从「7.18 重大疾病」中，提取序号（1）至（101）的序号和疾病名称。请注意，所有序号和疾病名称请完整显示，不要做任何省略处理。"})
+results = rag_chain.invoke({"input": "合同中 7.18 章节重大疾病的正文内容有哪些？"})
 
 for doc in results['context']:
-    print("RAG 的上下文", doc)
-# print("RAG 的上下文", results['context'])
+    print("RAG 的上下文", doc.page_content)
 print("回答", results['answer'])
